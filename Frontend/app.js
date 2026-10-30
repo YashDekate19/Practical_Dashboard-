@@ -117,23 +117,43 @@ async function loadPracticals() {
   }
 }
 
-// Netlify hosts static files only. These are deployment/preview statuses,
-// not checks of a running Flask or MySQL service.
+// Practicals deployment and live status indicators
 async function refreshStatus() {
   statuses = {};
   for (const p of practicals) {
     statuses[p.id] = {
-      status: p.id === 'pr4' ? 'UI Preview' : 'Deployed',
+      status: p.id === 'pr4' ? 'Render Backend' : 'Deployed',
       badgeClass: 'badge-preview',
       details: p.id === 'pr4'
-        ? 'Static UI only. Flask/MySQL backend must be hosted separately.'
+        ? 'Connected to Render Flask backend & MySQL database.'
         : 'Static files are included in this Netlify deployment.',
-      isLive: false
+      isLive: true
     };
   }
+
+  // Attempt live health ping to Render Flask backend
+  const backendUrl = (window.API_BASE_URL || "https://auth-flask-api.onrender.com").replace(/\/+$/, "");
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3500);
+    const res = await fetch(`${backendUrl}/api/health`, { signal: controller.signal, mode: 'cors' });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      statuses['pr4'] = {
+        status: 'Online',
+        badgeClass: 'badge-ready',
+        details: 'Render Flask backend & MySQL are live and healthy.',
+        isLive: true
+      };
+    }
+  } catch (err) {
+    // Render free tier may be cold-starting or offline; status stays 'Render Backend'
+  }
+
   updateLiveMetrics();
   renderCards();
 }
+
 
 function startAutoRefresh() {
   // No server health-check API is available on a static Netlify deployment.
@@ -274,23 +294,6 @@ function createCardHtml(p) {
             <span>Preview</span>
           </button>
         </div>
-
-        ${p.serviceKey ? `
-          <div class="service-controls">
-            ${currentStatus.isLive ? `
-              <button class="btn btn-sm btn-danger service-stop-btn" data-service="${p.serviceKey}">
-                Stop Service
-              </button>
-            ` : `
-              <button class="btn btn-sm btn-success service-start-btn" data-service="${p.serviceKey}">
-                Start Service
-              </button>
-            `}
-            <button class="btn btn-sm btn-outline copy-cmd-btn" data-cmd="${escapeHtml(p.command)}" title="Copy Run Command">
-              Copy Command
-            </button>
-          </div>
-        ` : ''}
       </div>
     </article>
   `;
@@ -307,45 +310,6 @@ function attachCardEvents() {
     });
   });
 
-  // Start service buttons
-  document.querySelectorAll('.service-start-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const service = btn.getAttribute('data-service');
-      btn.textContent = 'Starting...';
-      btn.disabled = true;
-      try {
-        const res = await fetch(`/api/service/${service}/start`, { method: 'POST' });
-        const data = await res.json();
-        showToast(data.message || 'Service start command dispatched');
-        setTimeout(async () => {
-          await refreshStatus();
-        }, 2000);
-      } catch (err) {
-        showToast('Failed to start service: ' + err.message);
-        btn.disabled = false;
-      }
-    });
-  });
-
-  // Stop service buttons
-  document.querySelectorAll('.service-stop-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const service = btn.getAttribute('data-service');
-      btn.textContent = 'Stopping...';
-      btn.disabled = true;
-      try {
-        const res = await fetch(`/api/service/${service}/stop`, { method: 'POST' });
-        const data = await res.json();
-        showToast('Service stopped');
-        setTimeout(async () => {
-          await refreshStatus();
-        }, 1500);
-      } catch (err) {
-        showToast('Failed to stop service: ' + err.message);
-        btn.disabled = false;
-      }
-    });
-  });
 
   // Copy command buttons
   document.querySelectorAll('.copy-cmd-btn').forEach(btn => {

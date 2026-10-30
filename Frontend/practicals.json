@@ -82,25 +82,27 @@
     "number": "Practical 04",
     "numIndex": 4,
     "title": "Authentication & Profile System",
-    "subtitle": "Login and Registration UI Preview",
-    "category": "Frontend Preview",
+    "subtitle": "Flask API & MySQL Database (Render Hosted)",
+    "category": "Full-Stack Web Application",
     "tech": [
       "HTML5",
       "CSS3",
       "JavaScript",
-      "Flask (backend not hosted)"
+      "Flask",
+      "MySQL",
+      "Render"
     ],
-    "description": "Login and registration interface preview. Netlify static hosting does not run the original Flask/MySQL backend, so authentication and database features need a separately deployed backend.",
+    "description": "Full-stack authentication and profile system. The frontend communicates with the Flask API hosted on Render with persistent MySQL database storage.",
     "type": "fullstack",
-    "folder": "Pr4",
+    "folder": "Frontend/practicals/pr4",
     "entryPath": "/practicals/pr4/index.html",
     "externalUrl": "/practicals/pr4/index.html",
-    "port": "Static UI preview only",
-    "command": "Open the deployed page",
+    "port": "Render Cloud + MySQL",
+    "command": "Deploy via Render Blueprint",
     "requirements": {
-      "db": "Backend required for authentication",
-      "env": "Deploy Flask separately",
-      "dependencies": "Flask and MySQL backend not included in static hosting"
+      "db": "MySQL 8.0 on Render Private Service",
+      "env": "Render Environment Variables (DB_HOST, DB_USER, etc.)",
+      "dependencies": "Flask, Gunicorn, MySQL Connector, Bcrypt"
     }
   },
   {

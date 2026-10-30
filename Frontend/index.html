@@ -32,7 +32,7 @@
 
         <h1 class="dashboard-title">Web Development Practicals Dashboard</h1>
         <p class="dashboard-subtitle">
-          Welcome to your centralized practicals hub. Browse all 6 web development practicals. Static pages and the React production build are included; the Flask/MySQL backend is a UI preview only.
+          Welcome to your centralized practicals hub. Browse all 6 web development practicals. Static pages and the React SPA run directly on Netlify; Practical 4 connects to the live Flask backend and MySQL database on Render.
         </p>
 
         <div class="header-actions">
@@ -126,9 +126,10 @@
       <div class="filter-pills">
         <button class="filter-pill active" data-filter="all">All (6)</button>
         <button class="filter-pill" data-filter="static">Static (4)</button>
-        <button class="filter-pill" data-filter="fullstack">UI Preview (1)</button>
+        <button class="filter-pill" data-filter="fullstack">Full-Stack (1)</button>
         <button class="filter-pill" data-filter="vite">React SPA (1)</button>
       </div>
+
     </section>
 
     <!-- Cards Grid -->
@@ -231,8 +232,8 @@
               <tr>
                 <td><strong>Pr 4: Auth & Profile</strong></td>
                 <td>Flask + MySQL</td>
-                <td>Port 5000 & 3306</td>
-                <td><code>python app.py</code> in Pr4</td>
+                <td>Render Cloud (HTTPS)</td>
+                <td><code>gunicorn app:app</code></td>
               </tr>
               <tr>
                 <td><strong>Pr 5: The Daily Times</strong></td>
@@ -243,27 +244,29 @@
               <tr>
                 <td><strong>Pr 6: Student Portal</strong></td>
                 <td>React 19 + Vite</td>
-                <td>Port 5173</td>
-                <td><code>npm run dev</code> in Pr 6/new-practical</td>
+                <td>Netlify Deployed</td>
+                <td><code>Static production build</code></td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="guide-section">
-          <h4>Practical 4: Flask & MySQL Database Setup</h4>
-          <p>Practical 4 requires Python 3 with Flask, bcrypt, and a running MySQL instance:</p>
+          <h4>Practical 4: Render Backend & MySQL Setup</h4>
+          <p>Practical 4 runs on Render with a private MySQL Docker service and persistent disk storage:</p>
           <div class="code-block">
-            <span class="comment"># Database Environment Configuration (defaults from app.py)</span>
-            <div>DB_HOST: localhost</div>
+            <span class="comment"># Render Service Environment Variables</span>
+            <div>DB_HOST: auth-mysql (Internal Private Hostname)</div>
             <div>DB_PORT: 3306</div>
-            <div>DB_USER: personal</div>
-            <div>DB_PASSWORD: MyNewPassword123!</div>
+            <div>DB_USER: auth_user</div>
+            <div>DB_PASSWORD: [Configured via Render Blueprint]</div>
             <div>DB_NAME: authentication_db</div>
+            <div>FRONTEND_ORIGIN: https://your-site.netlify.app (or *)</div>
           </div>
-          <p>To start Flask manually from terminal:</p>
+          <p>Local run with Python & MySQL:</p>
           <div class="code-block">
-            <code>cd "d:\TSD_5th\dashboard\Pr4"</code><br>
+            <code>cd Backend</code><br>
+            <code>pip install -r requirements.txt</code><br>
             <code>python app.py</code>
           </div>
         </div>
