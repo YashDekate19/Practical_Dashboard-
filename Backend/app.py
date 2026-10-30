@@ -85,11 +85,12 @@ def get_db_config():
     config = {
         "host": os.environ.get("DB_HOST", "localhost"),
         "port": port,
-        "user": os.environ.get("DB_USER", "auth_user"),
-        "password": os.environ.get("DB_PASSWORD", ""),
+        "user": os.environ.get("DB_USER", "personal"),
+        "password": os.environ.get("DB_PASSWORD", "MyNewPassword123!"),
         "database": os.environ.get("DB_NAME", "authentication_db"),
         "connection_timeout": 10
     }
+
 
     # Optional SSL configuration for cloud MySQL (TiDB Cloud, Aiven, etc.)
     if os.environ.get("DB_SSL", "").lower() in ("true", "1", "yes", "require"):

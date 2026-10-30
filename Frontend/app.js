@@ -131,12 +131,18 @@ async function refreshStatus() {
     };
   }
 
-  // Attempt live health ping to Render Flask backend
-  const backendUrl = (window.API_BASE_URL || "https://auth-flask-api.onrender.com").replace(/\/+$/, "");
+  // Attempt live health ping to Flask backend (auto-detects local vs Render)
+  const isLocal = typeof window !== "undefined" && (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.protocol === "file:"
+  );
+  const backendUrl = (window.API_BASE_URL || (isLocal ? "http://localhost:5000" : "https://auth-flask-api.onrender.com")).replace(/\/+$/, "");
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 3500);
     const res = await fetch(`${backendUrl}/api/health`, { signal: controller.signal, mode: 'cors' });
+
     clearTimeout(timeoutId);
     if (res.ok) {
       statuses['pr4'] = {
