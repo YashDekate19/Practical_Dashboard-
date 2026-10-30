@@ -23,7 +23,7 @@ services:
     name: auth-flask-api
     runtime: python
     rootDir: Backend
-    plan: starter
+    plan: free
     region: singapore
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
