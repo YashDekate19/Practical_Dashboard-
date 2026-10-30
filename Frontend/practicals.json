@@ -1,0 +1,159 @@
+[
+  {
+    "id": "pr1",
+    "number": "Practical 01",
+    "numIndex": 1,
+    "title": "Tasty Restaurant",
+    "subtitle": "Restaurant Landing Page & Food Catalog",
+    "category": "Frontend Web Development",
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "Responsive Design",
+      "Flexbox"
+    ],
+    "description": "A restaurant landing page showcasing menu items, food imagery, chef story, and contact information.",
+    "type": "static",
+    "folder": "Pr1",
+    "entryPath": "/practicals/pr1/index.html",
+    "externalUrl": "/practicals/pr1/index.html",
+    "port": "Static website",
+    "command": "Open the deployed page",
+    "requirements": {
+      "db": "None",
+      "env": "None",
+      "dependencies": "HTML and CSS"
+    }
+  },
+  {
+    "id": "pr2",
+    "number": "Practical 02",
+    "numIndex": 2,
+    "title": "ShopEasy E-Commerce",
+    "subtitle": "Electronics & Gadgets Product Catalog",
+    "category": "Frontend Web Development",
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "CSS Grid",
+      "E-Commerce UI"
+    ],
+    "description": "An electronics storefront with product categories, promotional banners, and product catalog layouts.",
+    "type": "static",
+    "folder": "Pr2",
+    "entryPath": "/practicals/pr2/index.html",
+    "externalUrl": "/practicals/pr2/index.html",
+    "port": "Static website",
+    "command": "Open the deployed page",
+    "requirements": {
+      "db": "None",
+      "env": "None",
+      "dependencies": "HTML and CSS"
+    }
+  },
+  {
+    "id": "pr3",
+    "number": "Practical 03",
+    "numIndex": 3,
+    "title": "Personal Developer Portfolio",
+    "subtitle": "Yash Dekate - Engineering Showcase",
+    "category": "Frontend Web Development",
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "UI/UX Design",
+      "Portfolio"
+    ],
+    "description": "A personal developer portfolio with biography, skills, education, projects, and contact information.",
+    "type": "static",
+    "folder": "Pr3",
+    "entryPath": "/practicals/pr3/index.html",
+    "externalUrl": "/practicals/pr3/index.html",
+    "port": "Static website",
+    "command": "Open the deployed page",
+    "requirements": {
+      "db": "None",
+      "env": "None",
+      "dependencies": "HTML and CSS"
+    }
+  },
+  {
+    "id": "pr4",
+    "number": "Practical 04",
+    "numIndex": 4,
+    "title": "Authentication & Profile System",
+    "subtitle": "Login and Registration UI Preview",
+    "category": "Frontend Preview",
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "Flask (backend not hosted)"
+    ],
+    "description": "Login and registration interface preview. Netlify static hosting does not run the original Flask/MySQL backend, so authentication and database features need a separately deployed backend.",
+    "type": "fullstack",
+    "folder": "Pr4",
+    "entryPath": "/practicals/pr4/index.html",
+    "externalUrl": "/practicals/pr4/index.html",
+    "port": "Static UI preview only",
+    "command": "Open the deployed page",
+    "requirements": {
+      "db": "Backend required for authentication",
+      "env": "Deploy Flask separately",
+      "dependencies": "Flask and MySQL backend not included in static hosting"
+    }
+  },
+  {
+    "id": "pr5",
+    "number": "Practical 05",
+    "numIndex": 5,
+    "title": "The Daily Times News Portal",
+    "subtitle": "Multi-Column Editorial Newspaper",
+    "category": "Frontend Web Development",
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "Grid Layout",
+      "Editorial UI"
+    ],
+    "description": "A newspaper-style portal with sections for world news, politics, technology, economy, sports, and science.",
+    "type": "static",
+    "folder": "Pr5",
+    "entryPath": "/practicals/pr5/index.html",
+    "externalUrl": "/practicals/pr5/index.html",
+    "port": "Static website",
+    "command": "Open the deployed page",
+    "requirements": {
+      "db": "None",
+      "env": "None",
+      "dependencies": "HTML and CSS"
+    }
+  },
+  {
+    "id": "pr6",
+    "number": "Practical 06",
+    "numIndex": 6,
+    "title": "Student Profile Portal",
+    "subtitle": "React SPA + Vite + Tailwind CSS",
+    "category": "Modern Frontend Framework",
+    "tech": [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Lucide Icons",
+      "SPA"
+    ],
+    "description": "An interactive student directory and academic profile portal with search, filters, grid/list view, and student profile interactions.",
+    "type": "vite",
+    "folder": "Pr 6/new-practical",
+    "entryPath": "/practicals/pr6/index.html",
+    "externalUrl": "/practicals/pr6/index.html",
+    "port": "Static production build",
+    "command": "Open the deployed page",
+    "requirements": {
+      "db": "None",
+      "env": "Built with Vite",
+      "dependencies": "Production assets included"
+    }
+  }
+]

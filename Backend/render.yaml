@@ -1,0 +1,42 @@
+services:
+  - type: pserv
+    name: auth-mysql
+    runtime: docker
+    rootDir: database
+    plan: starter
+    region: singapore
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 1
+    envVars:
+      - key: MYSQL_DATABASE
+        value: authentication_db
+      - key: MYSQL_USER
+        value: auth_user
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_ROOT_PASSWORD
+        sync: false
+
+  - type: web
+    name: auth-flask-api
+    runtime: python
+    rootDir: .
+    plan: starter
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DB_HOST
+        value: auth-mysql
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_NAME
+        value: authentication_db
+      - key: DB_USER
+        value: auth_user
+      - key: DB_PASSWORD
+        sync: false
+      - key: FRONTEND_ORIGIN
+        value: "*"
