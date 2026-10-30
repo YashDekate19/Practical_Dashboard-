@@ -82,7 +82,7 @@ def get_db_config():
     except (ValueError, TypeError):
         port = 3306
 
-    return {
+    config = {
         "host": os.environ.get("DB_HOST", "localhost"),
         "port": port,
         "user": os.environ.get("DB_USER", "auth_user"),
@@ -91,10 +91,48 @@ def get_db_config():
         "connection_timeout": 10
     }
 
+    # Optional SSL configuration for cloud MySQL (TiDB Cloud, Aiven, etc.)
+    if os.environ.get("DB_SSL", "").lower() in ("true", "1", "yes", "require"):
+        config["ssl_disabled"] = False
+
+    return config
+
+
+_schema_initialized = False
+
+def init_db_schema():
+    """Ensure required tables exist in MySQL database (idempotent)."""
+    global _schema_initialized
+    if _schema_initialized:
+        return
+    try:
+        config = get_db_config()
+        conn = mysql.connector.connect(**config)
+        if conn.is_connected():
+            cur = conn.cursor()
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INT NOT NULL AUTO_INCREMENT,
+                    name VARCHAR(100) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (id),
+                    UNIQUE KEY uq_users_email (email)
+                )
+            """)
+            conn.commit()
+            cur.close()
+            conn.close()
+            _schema_initialized = True
+    except Exception as e:
+        print("Schema auto-init notice:", e)
+
 
 def get_db_connection():
     """Establish and return a MySQL database connection, or None on failure."""
     try:
+        init_db_schema()
         config = get_db_config()
         connection = mysql.connector.connect(**config)
         if connection.is_connected():
@@ -105,6 +143,7 @@ def get_db_connection():
         print("Unexpected database error:", e)
 
     return None
+
 
 
 # -------------------------------------------------------------
